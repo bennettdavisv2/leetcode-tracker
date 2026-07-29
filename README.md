@@ -8,7 +8,7 @@ Solutions are synced automatically by the LeetCode tracker Chrome extension. Eac
 python3 scripts/generate_readme.py
 ```
 
-_Last generated: 7/29/2026, 11:09:15 AM_
+_Last generated: 7/29/2026, 12:10:24 PM_
 
 ## Solved Problems (8)
 
@@ -21,7 +21,7 @@ unique element appears only once, preserving relative order. Return
 the count k of unique elements; the first k elements of nums should
 hold the result.
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Two pointers. Because there's a sorted array, our lives get easier. We keep an index, and compare to that index, then update the next index value if a target is found. Basically building our target array.
 
 ---
 
@@ -33,7 +33,7 @@ Solution: [27-RemoveElement.py](27-RemoveElement/27-RemoveElement.py)
 val in place. Return the count k of remaining elements; order may
 change and elements beyond k don't matter.
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Two pointers approach. If a value is not the target value, place it in the valid sub array and increment index.
 
 ---
 
@@ -45,7 +45,7 @@ Solution: [80-RemoveDuplicatesFromSortedArrayIi.py](80-RemoveDuplicatesFromSorte
 unique element appears at most twice, preserving relative order.
 Return the count k of elements that should remain.
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Tricky start case, but the first two will never be change. The algorithm checks for 3 in a row using two pointers and updates if there is not 3 in a row to build the target list. One thing I'm learning is that you want to build the target list, not necessarily build around finding the wrongs. Build for the right that will filter out the wrongs.
 
 ---
 
@@ -57,7 +57,7 @@ Solution: [88-MergeSortedArray.py](88-MergeSortedArray/88-MergeSortedArray.py)
 empty) and nums2 (length n), merge nums2 into nums1 in place so
 nums1 becomes one sorted array.
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Two-pointers (really three) approach where we had deadspace to populate and were abel to traverse the arrays and in-place update. One edgecase was if nums i pointer hit 0 but there were still numbers in nums2.
 
 ---
 
@@ -69,7 +69,7 @@ Solution: [121-BestTimeToBuyAndSellStock.py](121-BestTimeToBuyAndSellStock/121-B
 on day i. Choose one day to buy and a later day to sell to maximize
 profit. Return the max achievable profit, or 0 if none is possible.
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Two pointers approach where you bring L to R if R - L is >=0 and keep track of max profit.
 
 ---
 
@@ -81,7 +81,7 @@ Solution: [122-BestTimeToBuyAndSellStockIi.py](122-BestTimeToBuyAndSellStockIi/1
 (one share at a time, must sell before buying again). Return the
 maximum total profit achievable.
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Same approach as I, but keep track of total profit and always shift L to R if profitable.
 
 ---
 
@@ -93,7 +93,7 @@ Solution: [169-MajorityElement.py](169-MajorityElement/169-MajorityElement.py)
 element that appears more than floor(n / 2) times. It is guaranteed
 to exist.
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Boyer-Moore Majority Vote algorithm. Incremented and decremented a count based on if values were equivalent. Algorithm is reliant on there being a majority voter and that voter will be the left pointers value and have ended the iterations with a <= +1 count.
 
 ---
 
@@ -104,4 +104,4 @@ Solution: [189-RotateArray.py](189-RotateArray/189-RotateArray.py)
 **Problem:** Given an array `nums`, rotate the array to the right by `k` steps,
 where k is non-negative, modifying the array in place.
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** This threw me for a loop. Originally I tried to algorithmically shift, store, and replace values in the array using two pointers, but then googled the solution and it said the reverse the array, then reverse [0:k], then reverse [k:]. The other approach used modulo and exra space. A good lesson here was the modulo operator a is great tool for shifting values.

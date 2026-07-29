@@ -9,3 +9,4 @@ nums1 becomes one sorted array.
 ## Notes
 
 <!-- Add your notes and lessons learned here -->
+Two-pointers (really three) approach where we had deadspace to populate and were abel to traverse the arrays and in-place update. One edgecase was if nums i pointer hit 0 but there were still numbers in nums2.

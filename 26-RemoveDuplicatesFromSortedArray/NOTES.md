@@ -9,4 +9,4 @@ hold the result.
 
 ## Notes
 
-<!-- Add your notes and lessons learned here -->
+Two pointers. Because there's a sorted array, our lives get easier. We keep an index, and compare to that index, then update the next index value if a target is found. Basically building our target array.

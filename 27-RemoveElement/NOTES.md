@@ -9,3 +9,4 @@ change and elements beyond k don't matter.
 ## Notes
 
 <!-- Add your notes and lessons learned here -->
+Two pointers approach. If a value is not the target value, place it in the valid sub array and increment index.

@@ -9,3 +9,4 @@ profit. Return the max achievable profit, or 0 if none is possible.
 ## Notes
 
 <!-- Add your notes and lessons learned here -->
+Two pointers approach where you bring L to R if R - L is >=0 and keep track of max profit.
