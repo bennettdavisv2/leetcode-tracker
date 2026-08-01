@@ -24,7 +24,11 @@ NOTES.md format:
 If a problem folder (created by the extension) doesn't have a NOTES.md
 yet, this script scaffolds one with a best-effort title and TODO
 placeholders, so newly-synced problems show up automatically instead of
-being skipped or erroring out.
+being skipped or erroring out. If the extension has also dropped its own
+README.md in that folder (it does this for newer syncs, with the full
+official problem statement), the scaffold pulls the intro summary from
+that instead of leaving a TODO - it's extension-authored, not user data,
+so there's nothing to lose if it gets overwritten on a future resync.
 
 Run this after solving a new problem or updating your notes:
 
@@ -46,20 +50,52 @@ def find_solution_file(dir_path):
     return None
 
 
+def find_problem_readme(dir_path):
+    path = os.path.join(dir_path, "README.md")
+    return path if os.path.isfile(path) else None
+
+
+def extract_summary(text):
+    match = re.search(r"(?m)^\s*Example\s*1\s*:?\s*$", text)
+    summary = text[: match.start()] if match else text
+    return summary.strip()
+
+
 def guess_title(number, dir_name):
     remainder = dir_name[len(str(number)) + 1:]
-    words = re.findall(r"[0-9]+|[A-Z][a-z]*", remainder)
+    words = re.findall(r"\([0-9]+\)|[0-9]+|[A-Z][a-z]*", remainder)
+
+    # Merge runs of single capital letters (e.g. "I", "I" -> "II") that the
+    # PascalCase split above can't tell apart from separate words.
+    merged = []
+    for w in words:
+        if merged and len(merged[-1]) >= 1 and merged[-1].isalpha() and merged[-1].isupper() and len(w) == 1 and w.isalpha():
+            merged[-1] += w
+        else:
+            merged.append(w)
+    words = merged
+
     if words and words[-1].lower() in ROMAN_SUFFIXES:
         words[-1] = ROMAN_SUFFIXES[words[-1].lower()]
-    return f"{number}. {' '.join(words)}" if words else f"{number}. {dir_name}"
+
+    # Glue a trailing "(1)"-style token onto the previous word with no space.
+    title_words = []
+    for w in words:
+        if title_words and w.startswith("("):
+            title_words[-1] += w
+        else:
+            title_words.append(w)
+
+    return f"{number}. {' '.join(title_words)}" if title_words else f"{number}. {dir_name}"
 
 
-def scaffold_notes(notes_path, number, dir_name):
+def scaffold_notes(notes_path, number, dir_name, summary=None):
     title = guess_title(number, dir_name)
+    problem_body = summary or "<!-- TODO: paste/summarize the problem statement -->"
     content = (
         f"# {title}\n\n"
         "## Problem\n\n"
-        "<!-- TODO: paste/summarize the problem statement -->\n\n"
+        f"{problem_body}\n\n"
         "## Notes\n\n"
         "<!-- Add your notes and lessons learned here -->\n"
     )
@@ -109,9 +145,15 @@ def collect_entries():
             continue
 
         number = int(match.group(1))
+        problem_readme = find_problem_readme(dir_path)
+
         notes_path = os.path.join(dir_path, "NOTES.md")
         if not os.path.exists(notes_path):
-            scaffold_notes(notes_path, number, name)
+            summary = None
+            if problem_readme:
+                with open(problem_readme) as f:
+                    summary = extract_summary(f.read())
+            scaffold_notes(notes_path, number, name, summary=summary)
             scaffolded.append(notes_path)
 
         title, description, notes = parse_notes(notes_path)
@@ -123,6 +165,7 @@ def collect_entries():
                 "title": title or guess_title(number, name),
                 "description": description or "_No description yet — fill in NOTES.md._",
                 "notes": notes or "_Not yet filled in._",
+                "full_statement": f"{name}/README.md" if problem_readme else None,
             }
         )
     entries.sort(key=lambda e: e["number"])
@@ -159,6 +202,9 @@ def render(entries):
         lines.append(f"Solution: [{e['file']}]({e['dir']}/{e['file']})")
         lines.append("")
         lines.append(f"**Problem:** {e['description']}")
+        if e["full_statement"]:
+            lines.append("")
+            lines.append(f"[Full problem statement]({e['full_statement']})")
         lines.append("")
         lines.append(f"**Notes / Lessons:** {e['notes']}")
         lines.append("")
