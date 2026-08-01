@@ -16,3 +16,4 @@ You must implement the functions of the class such that each function works in 
 ## Notes
 
 <!-- Add your notes and lessons learned here -->
+This problem highlighted that in order to do O(1) time operations you need different data structures. A Hashset can't do random indexing. An array can't do O(1) lookups, thus we created a class that combined the two.

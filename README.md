@@ -8,7 +8,7 @@ Solutions are synced automatically by the LeetCode tracker Chrome extension. Eac
 python3 scripts/generate_readme.py
 ```
 
-_Last generated: 8/1/2026, 04:31:45 PM_
+_Last generated: 8/1/2026, 05:21:38 PM_
 
 ## Solved Problems (14)
 
@@ -54,7 +54,8 @@ Return the minimum number of jumps to reach index n - 1. The test cases are gene
 
 [Full problem statement](45-JumpGameII/README.md)
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** We are told this algorithm will never run on a false case. That lends itself to a greedy algorithm. 
+We create buckets and go to the farthest value that the bucket can bring us to.
 
 ---
 
@@ -68,7 +69,8 @@ Return true if you can reach the last index, or false otherwise.
 
 [Full problem statement](55-JumpGame/README.md)
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Use this example: [1,3,1,0,4]
+Moving goal post greedy method. Goal post is last index, let's call it 4. Starting from the end of the array. For each, if the current index + the value at the current index is >= to the goal, move the goal to i. It's an excellent greedy algorithm, I'm just unsure how to recognize if a problem will need a greedy solution. And if you make it to the front, then return True, else false.
 
 ---
 
@@ -132,7 +134,7 @@ Given two integer arrays gas and cost, return the starting gas station's index i
 
 [Full problem statement](134-GasStation/README.md)
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Initial check to guarantee a solution, then we perform a greedy algorithm where we change the start and check if we hit a place we can't go to. If we can make it to the end of the array, then we guarantee the right solution.
 
 ---
 
@@ -171,7 +173,7 @@ You must write an algorithm that runs in O(n) time and without using the divis
 
 [Full problem statement](238-ProductofArrayExceptSelf/README.md)
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** Create an answer array and do prefix and postfix calculations for each value, then return the answer array.
 
 ---
 
@@ -185,7 +187,7 @@ According to the definition of h-index on Wikipedia: The h-index is defined as t
 
 [Full problem statement](274-H-Index/README.md)
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** There were multiple approaches here, one was a sorting approach and another was an extra memory approach. I chose the sorting approach. After sorting, if you find a citation count that is more than the number of publications left, you've found the H-Index. The candidate is the largest value and decrements from there.
 
 ---
 
@@ -206,4 +208,4 @@ You must implement the functions of the class such that each function works in 
 
 [Full problem statement](380-InsertDeleteGetRandomO(1)/README.md)
 
-**Notes / Lessons:** _Not yet filled in._
+**Notes / Lessons:** This problem highlighted that in order to do O(1) time operations you need different data structures. A Hashset can't do random indexing. An array can't do O(1) lookups, thus we created a class that combined the two.

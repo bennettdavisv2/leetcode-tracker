@@ -11,3 +11,4 @@ Given two integer arrays gas and cost, return the starting gas station's index i
 ## Notes
 
 <!-- Add your notes and lessons learned here -->
+Initial check to guarantee a solution, then we perform a greedy algorithm where we change the start and check if we hit a place we can't go to. If we can make it to the end of the array, then we guarantee the right solution.

@@ -11,3 +11,4 @@ You must write an algorithm that runs in O(n) time and without using the divis
 ## Notes
 
 <!-- Add your notes and lessons learned here -->
+Create an answer array and do prefix and postfix calculations for each value, then return the answer array.

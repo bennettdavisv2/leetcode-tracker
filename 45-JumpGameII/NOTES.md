@@ -16,3 +16,5 @@ Return the minimum number of jumps to reach index n - 1. The test cases are gene
 ## Notes
 
 <!-- Add your notes and lessons learned here -->
+We are told this algorithm will never run on a false case. That lends itself to a greedy algorithm. 
+We create buckets and go to the farthest value that the bucket can bring us to.

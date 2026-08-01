@@ -9,3 +9,4 @@ According to the definition of h-index on Wikipedia: The h-index is defined as t
 ## Notes
 
 <!-- Add your notes and lessons learned here -->
+There were multiple approaches here, one was a sorting approach and another was an extra memory approach. I chose the sorting approach. After sorting, if you find a citation count that is more than the number of publications left, you've found the H-Index. The candidate is the largest value and decrements from there.
